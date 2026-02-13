@@ -1,10 +1,8 @@
 name: Publication automatique du site sur GitHub Pages
 
 on:
-  workflow_run:
-    workflows: ["Tests du site (CI)"]
-    types:
-      - completed
+  push:
+    branches: ["main"]
 
 permissions:
   contents: read
