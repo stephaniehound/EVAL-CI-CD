@@ -11,8 +11,11 @@ permissions:
 
 jobs:
   deploy-pages:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Recuperation du projet
@@ -21,10 +24,12 @@ jobs:
       - name: Configuration de GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Preparation de l'artifact du site
+      - name: Preparation de l'artefact du site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./
+          path: .
 
       - name: Deploiement du site sur GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
+
