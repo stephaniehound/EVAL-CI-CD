@@ -1,0 +1,29 @@
+name: Tests en continu du site (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperation du projet
+        uses: actions/checkout@v4
+
+      - name: Verification de la presence du site
+        run: |
+          echo "Verification du fichier index.html..."
+          if [ ! -f index.html ]; then
+            echo "Erreur : index.html absent"
+            exit 1
+          fi
+
+      - name: Verification basique du HTML
+        run: |
+          echo "Controle du contenu HTML..."
+          grep "<html" index.html || (echo "Structure HTML invalide" && exit 1)
+
+      - name: Fin des tests CI
+        run: echo "Tests termines avec succes"
