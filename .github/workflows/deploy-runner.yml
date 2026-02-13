@@ -1,0 +1,26 @@
+name: Deploiement du site sur machine self-hosted (CD2)
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy-local:
+    runs-on: self-hosted
+
+    steps:
+      - name: Recuperation du projet depuis le depot
+        uses: actions/checkout@v4
+
+      - name: Installation du serveur web Nginx
+        run: |
+          sudo apt update
+          sudo apt install -y nginx
+
+      - name: Deploiement de la page web sur la machine runner
+        run: |
+          sudo cp index.html /var/www/html/index.html
+
+      - name: Redemarrage du serveur web
+        run: |
+          sudo systemctl restart nginx
