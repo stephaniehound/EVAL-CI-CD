@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   deploy-pages:
-    runs-on: ubuntu-lasted
+    runs-on: ubuntu-latest
 
     environment:
       name: github-pages
